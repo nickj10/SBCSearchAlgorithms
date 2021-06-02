@@ -7,11 +7,13 @@ public class AStarNode {
     private AStarNode parent;
     private City current;
     private Connection connection;
+    private long cost;
 
-    public AStarNode(AStarNode parent, City current, Connection connection) {
+    public AStarNode(AStarNode parent, City current, Connection connection, long cost) {
         this.parent = parent;
         this.current = current;
         this.connection = connection;
+        this.cost = cost;
     }
 
     public AStarNode getParent() {
@@ -36,5 +38,13 @@ public class AStarNode {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    public long getCost() {
+        return cost;
+    }
+
+    public void setCost(long cost) {
+        this.cost = cost;
     }
 }

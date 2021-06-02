@@ -36,19 +36,13 @@ public class AlgorithmManager {
                     System.out.println("ERROR: City " + origin + " not found.");
                     break;
                 } else {
-                    ArrayList<City> path = astar.findShortestPath(orgCity, destCity);
-                    printSolutionPath(path);
+                    AStarSolution solution = astar.findShortestPath(orgCity, destCity);
+                    solution.printSolution();
                 }
                 break;
             case 2:
                 System.out.println("CSP selected.");
                 break;
-        }
-    }
-
-    private void printSolutionPath(ArrayList<City> path) {
-        for(City c : path) {
-            System.out.println(c.getName() + ", ");
         }
     }
 }

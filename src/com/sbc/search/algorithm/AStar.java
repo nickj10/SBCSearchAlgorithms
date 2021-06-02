@@ -24,27 +24,66 @@ public class AStar {
         // TODO: Determine the heuristic
     }
 
-    public ArrayList<City> findShortestPath(City orig, City dest) {
+    public AStarSolution findShortestPath(City orig, City dest) {
         return aStarAlgorithm(orig, dest);
     }
 
-    private ArrayList<City> aStarAlgorithm(City orig, City dest) {
+    private AStarSolution aStarAlgorithm(City orig, City dest) {
         PriorityQueue<AStarNode> open = new PriorityQueue<>(routes.getConnections().size(), new AStarNodeComparator());
         ArrayList<AStarNode> closed = new ArrayList<>();
 
         // Add initial node to open
-        ArrayList<Connection> connections = routes.getConnectionsByOrigin(orig.getName());
-        open.add(new AStarNode(null, orig, connections.get(0)));
+        open.add(new AStarNode(null, orig, null, 0));
         while (!open.isEmpty()) {
             AStarNode node = open.poll();
-            if (node.getCurrent().getName().equals(dest.getName())) {
-                closed.add(new AStarNode(null, node.getCurrent(), node.getConnection()));
+            if (isDestination(node, dest)) {
+                closed.add(new AStarNode(null, node.getCurrent(), node.getConnection(), node.getCost()));
                 break;
             } else {
-
+                ArrayList<Connection> connections = routes.getConnectionsByOrigin(node.getCurrent().getName());
+                for (Connection conn : connections) {
+                    if (isVisited(conn, closed) || toBeVisited(conn, open)) {
+                        continue;
+                    } else {
+                        // Calculate f(n) = g(n) + h(n), where h(n) is the heuristic
+                        long cost = node.getCost() + conn.getDistance();
+                        if (conn.getTo().equals(conn.getFrom())) {
+                            closed.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
+                        } else {
+                            open.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
+                        }
+                    }
+                }
             }
         }
-        return aStarNodeToCities(closed);
+        return new AStarSolution(aStarNodeToCities(closed), getTotalCost(closed));
+    }
+
+    private long getTotalCost(ArrayList<AStarNode> nodes) {
+        return nodes.get(nodes.size() - 1).getCost();
+    }
+
+    private boolean isDestination(AStarNode node, City dest) {
+        return node.getCurrent().getName().equals(dest.getName());
+    }
+
+    private boolean toBeVisited(Connection conn, PriorityQueue<AStarNode> open) {
+        AStarNode[] nodes = open.toArray(new AStarNode[open.size()]);
+        for(AStarNode node : nodes) {
+            if (node.getConnection().getTo().equals(conn.getTo()) && node.getConnection().getFrom().equals(conn.getFrom())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isVisited(Connection conn, ArrayList<AStarNode> closed) {
+        for(AStarNode node : closed) {
+            if (conn.getTo().equals(node.getConnection().getTo())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private ArrayList<City> aStarNodeToCities(ArrayList<AStarNode> nodes) {
