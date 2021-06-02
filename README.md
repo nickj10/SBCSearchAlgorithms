@@ -16,11 +16,13 @@ to use any IDEA that supports Java projects.
 1. Download the project.
 2. Open your IntelliJ IDEA.
 3. Open the project as a new project with existing sources.
-4. Select the folder where the project is found.
+4. Select the folder where the project is.
+5. The only external library used for this project is gson-2.8.7 (which can be easily added to the libraries or
+   dependencies using Maven by searching com.google.code.gson and the version is 2.8.7).
 
 ## Execution
 
-The compilation and execution can be done by running the main class. 
+The compilation and execution can be done by running the Main class. 
 
 ## Author
 
