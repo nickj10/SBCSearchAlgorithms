@@ -1,7 +1,9 @@
-import algorithm.AlgorithmManager;
-import model.Routes;
-import utils.JSONReader;
-import utils.Menu;
+package com.sbc.search;
+
+import com.sbc.search.algorithm.AlgorithmManager;
+import com.sbc.search.model.Routes;
+import com.sbc.search.utils.JSONReader;
+import com.sbc.search.utils.Menu;
 
 public class Main {
     public static final String PATH = "resources/dades_routes_1.json";
@@ -15,7 +17,7 @@ public class Main {
 
         // Create menu and start the program
         Menu menu = new Menu();
-        AlgorithmManager algoManager = new AlgorithmManager();
+        AlgorithmManager algoManager = new AlgorithmManager(routes);
         menu.showStartingMessage();
         do {
             do {

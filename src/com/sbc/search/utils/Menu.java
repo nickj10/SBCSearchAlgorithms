@@ -1,4 +1,4 @@
-package utils;
+package com.sbc.search.utils;
 
 import java.util.Scanner;
 

@@ -1,11 +1,11 @@
-package utils;
+package com.sbc.search.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import model.City;
-import model.Connection;
+import com.sbc.search.model.City;
+import com.sbc.search.model.Connection;
 
 import java.io.IOException;
 import java.nio.file.Files;
