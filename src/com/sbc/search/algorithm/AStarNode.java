@@ -4,21 +4,21 @@ import com.sbc.search.model.City;
 import com.sbc.search.model.Connection;
 
 public class AStarNode {
-    private City parent;
+    private AStarNode parent;
     private City current;
     private Connection connection;
 
-    public AStarNode(City parent, City current, Connection connection) {
+    public AStarNode(AStarNode parent, City current, Connection connection) {
         this.parent = parent;
         this.current = current;
         this.connection = connection;
     }
 
-    public City getParent() {
+    public AStarNode getParent() {
         return parent;
     }
 
-    public void setParent(City parent) {
+    public void setParent(AStarNode parent) {
         this.parent = parent;
     }
 
