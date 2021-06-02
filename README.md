@@ -2,7 +2,7 @@
 
 ## Description
 This is a proposed project from Knowledge Based Systems course from Universitat Ramon Llull - La Salle Barcelona. 
-The com.sbc.search.Main objective of this project is to implement two of the search algorithms: A* and CSP. Given a map of roads of
+The main objective of this project is to implement two of the search algorithms: A* and CSP. Given a map of roads of
 Spain, we will be able to find the shortest path from a given origin to a given destination.
 
 
@@ -17,10 +17,12 @@ to use any IDEA that supports Java projects.
 2. Open your IntelliJ IDEA.
 3. Open the project as a new project with existing sources.
 4. Select the folder where the project is.
+5. The only external library used for this project is gson-2.8.7 (which can be easily added to the libraries or
+   dependencies using Maven by searching com.google.code.gson and the version is 2.8.7).
 
 ## Execution
 
-The compilation and execution can be done by running the com.sbc.search.Main class. 
+The compilation and execution can be done by running the Main class. 
 
 ## Author
 
