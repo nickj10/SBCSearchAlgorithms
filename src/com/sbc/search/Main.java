@@ -6,7 +6,7 @@ import com.sbc.search.utils.JSONReader;
 import com.sbc.search.utils.Menu;
 
 public class Main {
-    public static final String PATH = "resources/dades_routes_1.json";
+    public static final String PATH = "resources/spain_routes.json";
 
     public static void main(String[] args) {
         JSONReader jsonReader = new JSONReader();

@@ -33,7 +33,7 @@ public class AlgorithmManager {
                     System.out.println("ERROR: City " + origin + " not found.");
                     break;
                 } else if(destCity == null) {
-                    System.out.println("ERROR: City " + origin + " not found.");
+                    System.out.println("ERROR: City " + destination + " not found.");
                     break;
                 } else {
                     AStarSolution solution = astar.findShortestPath(orgCity, destCity);
