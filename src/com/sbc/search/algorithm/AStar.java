@@ -9,19 +9,9 @@ import java.util.PriorityQueue;
 
 public class AStar {
     private Routes routes;
-    /*
-    def heuristic(a: GridLocation, b: GridLocation) -> float:
-    (x1, y1) = a
-    (x2, y2) = b
-    return abs(x1 - x2) + abs(y1 - y2)
-     */
 
     public AStar(Routes routes) {
         this.routes = routes;
-    }
-
-    private void heuristic(long a, long b) {
-        // TODO: Determine the heuristic
     }
 
     public AStarSolution findShortestPath(City orig, City dest) {
@@ -33,11 +23,11 @@ public class AStar {
         ArrayList<AStarNode> closed = new ArrayList<>();
 
         // Add initial node to open
-        open.add(new AStarNode(null, orig, null, 0));
+        open.add(new AStarNode(null, orig, null, 0, 0));
         while (!open.isEmpty()) {
             AStarNode node = open.poll();
             if (isDestination(node, dest)) {
-                closed.add(new AStarNode(null, node.getCurrent(), node.getConnection(), node.getCost()));
+                closed.add(new AStarNode(null, node.getCurrent(), node.getConnection(), node.getCost(), node.getDistance()));
                 break;
             } else {
                 AStarNode parent;
@@ -46,24 +36,29 @@ public class AStar {
                 } else {
                     parent = null;
                 }
-                closed.add(new AStarNode(parent, node.getCurrent(), node.getConnection(), node.getCost()));
+                closed.add(new AStarNode(parent, node.getCurrent(), node.getConnection(), node.getCost(), node.getDistance()));
                 ArrayList<Connection> connections = routes.getConnectionsByOrigin(node.getCurrent().getName());
                 for (Connection conn : connections) {
                     if (isVisited(conn, closed) || toBeVisited(conn, open)) {
                         continue;
                     } else {
+                        long h = (long)(conn.getDistance() * 3); // variable heuristic
+                        //long h = 0;
+                        //long h = (long)(conn.getDistance() * 0.5);
+                        //long h = (long)(conn.getDistance() * 1);
+
                         // Calculate f(n) = g(n) + h(n), where h(n) is the heuristic
-                        long cost = node.getCost() + conn.getDistance();
-                        open.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
+                        long cost = node.getCost() + conn.getDistance() + h;
+                        open.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost, node.getCost() + conn.getDistance()));
                     }
                 }
             }
         }
-        return new AStarSolution(aStarNodeToCities(closed), getTotalCost(closed));
+        return new AStarSolution(aStarNodeToCities(closed), getTotalDistance(closed));
     }
 
-    private long getTotalCost(ArrayList<AStarNode> nodes) {
-        return nodes.get(nodes.size() - 1).getCost();
+    private long getTotalDistance(ArrayList<AStarNode> nodes) {
+        return nodes.get(nodes.size() - 1).getDistance();
     }
 
     private boolean isDestination(AStarNode node, City dest) {
