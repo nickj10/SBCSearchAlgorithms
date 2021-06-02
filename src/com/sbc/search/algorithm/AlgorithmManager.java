@@ -3,7 +3,6 @@ package com.sbc.search.algorithm;
 import com.sbc.search.model.City;
 import com.sbc.search.model.Routes;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AlgorithmManager {
@@ -22,7 +21,6 @@ public class AlgorithmManager {
     public void start(int opt) {
         switch (opt) {
             case 1:
-                System.out.println("A-star selected.");
                 System.out.print("Enter origin: ");
                 String origin = scanner.nextLine();
                 System.out.print("Enter destination: ");

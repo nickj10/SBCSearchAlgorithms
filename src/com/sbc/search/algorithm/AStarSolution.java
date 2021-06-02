@@ -14,9 +14,10 @@ public class AStarSolution {
     }
 
     public void printSolution() {
+        System.out.println("Path:");
         for(City c : this.path) {
             System.out.print(c.getName() + ", ");
         }
-        System.out.println("Cost: " + this.cost);
+        System.out.println("\nDistance: " + this.cost + "m");
     }
 }

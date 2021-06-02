@@ -40,6 +40,13 @@ public class AStar {
                 closed.add(new AStarNode(null, node.getCurrent(), node.getConnection(), node.getCost()));
                 break;
             } else {
+                AStarNode parent;
+                if (!closed.isEmpty()) {
+                    parent = closed.get(closed.size() - 1);
+                } else {
+                    parent = null;
+                }
+                closed.add(new AStarNode(parent, node.getCurrent(), node.getConnection(), node.getCost()));
                 ArrayList<Connection> connections = routes.getConnectionsByOrigin(node.getCurrent().getName());
                 for (Connection conn : connections) {
                     if (isVisited(conn, closed) || toBeVisited(conn, open)) {
@@ -47,11 +54,7 @@ public class AStar {
                     } else {
                         // Calculate f(n) = g(n) + h(n), where h(n) is the heuristic
                         long cost = node.getCost() + conn.getDistance();
-                        if (conn.getTo().equals(conn.getFrom())) {
-                            closed.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
-                        } else {
-                            open.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
-                        }
+                        open.add(new AStarNode(node, routes.getCity(conn.getTo()), conn, cost));
                     }
                 }
             }
@@ -69,7 +72,7 @@ public class AStar {
 
     private boolean toBeVisited(Connection conn, PriorityQueue<AStarNode> open) {
         AStarNode[] nodes = open.toArray(new AStarNode[open.size()]);
-        for(AStarNode node : nodes) {
+        for (AStarNode node : nodes) {
             if (node.getConnection().getTo().equals(conn.getTo()) && node.getConnection().getFrom().equals(conn.getFrom())) {
                 return true;
             }
@@ -78,9 +81,11 @@ public class AStar {
     }
 
     private boolean isVisited(Connection conn, ArrayList<AStarNode> closed) {
-        for(AStarNode node : closed) {
-            if (conn.getTo().equals(node.getConnection().getTo())) {
-                return true;
+        for (AStarNode node : closed) {
+            if (node.getConnection() != null) {
+                if (conn.getTo().equals(node.getConnection().getTo())) {
+                    return true;
+                }
             }
         }
         return false;
