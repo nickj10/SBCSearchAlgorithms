@@ -4,11 +4,11 @@ import com.sbc.search.model.City;
 
 import java.util.ArrayList;
 
-public class AStarSolution {
+public class MainSolution {
     private ArrayList<City> path;
     private long cost;
 
-    public AStarSolution(ArrayList<City> path, long cost) {
+    public MainSolution(ArrayList<City> path, long cost) {
         this.path = path;
         this.cost = cost;
     }

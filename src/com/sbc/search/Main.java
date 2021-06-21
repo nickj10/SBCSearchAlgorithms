@@ -24,7 +24,14 @@ public class Main {
                 menu.showMainMenu();
                 menu.getOptionInput();
             } while (!menu.checkMainOption());
-            algoManager.start(menu.getOptionA());
+            int option = menu.getOptionA();
+            if (option == 2) {
+                do {
+                    menu.menuHeuristicas();
+                    menu.getOptionInputB();
+                } while (!menu.checkSubmenuOption());
+            }
+            algoManager.start(menu.getOptionA(), menu.getOptionB());
         } while (!menu.exitProgram());
     }
 }

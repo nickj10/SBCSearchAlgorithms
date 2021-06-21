@@ -14,11 +14,11 @@ public class AStar {
         this.routes = routes;
     }
 
-    public AStarSolution findShortestPath(City orig, City dest) {
+    public MainSolution findShortestPath(City orig, City dest) {
         return aStarAlgorithm(orig, dest);
     }
 
-    private AStarSolution aStarAlgorithm(City orig, City dest) {
+    private MainSolution aStarAlgorithm(City orig, City dest) {
         PriorityQueue<AStarNode> open = new PriorityQueue<>(routes.getConnections().size(), new AStarNodeComparator());
         ArrayList<AStarNode> closed = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class AStar {
                 }
             }
         }
-        return new AStarSolution(aStarNodeToCities(closed), getTotalDistance(closed));
+        return new MainSolution(aStarNodeToCities(closed), getTotalDistance(closed));
     }
 
     private long getTotalDistance(ArrayList<AStarNode> nodes) {

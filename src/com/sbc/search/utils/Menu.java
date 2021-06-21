@@ -8,6 +8,7 @@ public class Menu {
     private static final int MAX_SUB_MENU = 'f';
     private static final int MIN_SUB_MENU = 'a';
     private String option;
+    private String optionB;
     private Scanner sc;
 
     public Menu() {
@@ -22,12 +23,20 @@ public class Menu {
         option = sc.nextLine();
     }
 
+    public void getOptionInputB() {
+        optionB = sc.nextLine();
+    }
+
     public int getOptionA() {
         return Integer.parseInt(option);
     }
 
     public char getOptionB() {
-        return option.toLowerCase().charAt(0);
+        if (optionB != null) {
+            return optionB.toLowerCase().charAt(0);
+        } else {
+            return ' ';
+        }
     }
 
     public void showMainMenu() {
@@ -87,27 +96,25 @@ public class Menu {
     }
 
     public void menuHeuristicas() {
-        System.out.println("\n");
-        System.out.println("a) Heuristica exacta");
-        System.out.println("b) Historial de localitzacions");
-        System.out.println("\n");
+        System.out.println("a) Most-constraining variable");
+        System.out.println("b) Least-constraining value");
         System.out.println("Select an option: ");
     }
 
     private int checkCharOption() {
         int opt = -1;
 
-        if (option.length() > 1) {
+        if (optionB.length() > 1) {
             return opt;
         }
-        int numeric = option.toLowerCase().charAt(0);
+        int numeric = optionB.toLowerCase().charAt(0);
         if (numeric >= 'a' && numeric <= 'f') {
             opt = numeric;
         }
         return opt;
     }
 
-    public boolean validateInput() {
+    public boolean checkSubmenuOption() {
         int aux = checkCharOption();
         if (aux >= MIN_SUB_MENU && aux <= MAX_SUB_MENU) {
             return true;

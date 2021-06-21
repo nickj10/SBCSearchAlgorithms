@@ -18,29 +18,40 @@ public class AlgorithmManager {
         this.scanner = new Scanner(System.in);
     }
 
-    public void start(int opt) {
-        switch (opt) {
-            case 1:
-                System.out.print("Enter origin: ");
-                String origin = scanner.nextLine();
-                System.out.print("Enter destination: ");
-                String destination = scanner.nextLine();
-                City orgCity = routes.getCity(origin);
-                City destCity = routes.getCity(destination);
-                if (orgCity == null) {
-                    System.out.println("ERROR: City " + origin + " not found.");
-                    break;
-                } else if(destCity == null) {
-                    System.out.println("ERROR: City " + destination + " not found.");
-                    break;
-                } else {
-                    AStarSolution solution = astar.findShortestPath(orgCity, destCity);
-                    solution.printSolution();
+    public void start(int opt, int optB) {
+        if (opt != 3) {
+            System.out.print("Enter origin: ");
+            String origin = scanner.nextLine();
+            System.out.print("Enter destination: ");
+            String destination = scanner.nextLine();
+            City orgCity = routes.getCity(origin);
+            City destCity = routes.getCity(destination);
+            if (orgCity == null) {
+                System.out.println("ERROR: City " + origin + " not found.");
+            } else if (destCity == null) {
+                System.out.println("ERROR: City " + destination + " not found.");
+            } else {
+                switch (opt) {
+                    case 1:
+                        MainSolution solution = astar.findShortestPath(orgCity, destCity);
+                        solution.printSolution();
+                        break;
+                    case 2:
+                        MainSolution cspSol = null;
+                        if (optB == 'a') {
+                            cspSol = csp.findShortestPath(orgCity, destCity, CSPHeuristic.MOST_CONSTRAINING_VARIABLE);
+                        } else if (optB == 'b') {
+                            cspSol = csp.findShortestPath(orgCity, destCity, CSPHeuristic.LEAST_CONSTRAINING_VALUE);
+                        }
+                        if (cspSol != null) {
+                            cspSol.printSolution();
+                        } else {
+                            System.out.println("No solution was found for the given origin and destination.");
+                        }
+                        break;
                 }
-                break;
-            case 2:
-                System.out.println("CSP selected.");
-                break;
+            }
         }
+
     }
 }
