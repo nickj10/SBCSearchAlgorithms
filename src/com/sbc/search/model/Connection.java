@@ -21,4 +21,20 @@ public class Connection{
     public long getDuration() {
         return duration;
     }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public void setDistance(long distance) {
+        this.distance = distance;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 }

@@ -14,7 +14,7 @@ public class AlgorithmManager {
     public AlgorithmManager(Routes routes) {
         this.routes = routes;
         this.astar = new AStar(routes);
-        this.csp = new CSP();
+        this.csp = new CSP(routes);
         this.scanner = new Scanner(System.in);
     }
 
