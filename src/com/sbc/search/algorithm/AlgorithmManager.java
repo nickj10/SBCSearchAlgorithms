@@ -39,9 +39,11 @@ public class AlgorithmManager {
                     case 2:
                         MainSolution cspSol = null;
                         if (optB == 'a') {
-                            cspSol = csp.findShortestPath(orgCity, destCity, CSPHeuristic.MOST_CONSTRAINING_VARIABLE);
+                            csp.findShortestPath(orgCity, destCity, CSPHeuristic.MOST_CONSTRAINING_VARIABLE);
                         } else if (optB == 'b') {
                             cspSol = csp.findShortestPath(orgCity, destCity, CSPHeuristic.LEAST_CONSTRAINING_VALUE);
+                        } else if (optB == 'c') {
+                            cspSol = csp.findShortestPath(orgCity, destCity, CSPHeuristic.DEGREE);
                         }
                         if (cspSol != null) {
                             cspSol.printSolution();

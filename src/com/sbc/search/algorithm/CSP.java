@@ -16,43 +16,58 @@ public class CSP {
 
     public MainSolution findShortestPath(City orig, City dest, CSPHeuristic heuristic) {
         MainSolution solution = new MainSolution();
-        CSPNode node = new CSPNode(orig, null, 0);
+        CSPNode node = new CSPNode(orig, null, 0, 0);
         solution.addCityToPath(orig, 0, 0);
         MainSolution best = new MainSolution();
         best.addCityToPath(orig, Long.MAX_VALUE, Long.MAX_VALUE);
         CSPAlgorithm(orig, dest, node, 0, solution, best, heuristic);
-        return solution;
+        return best;
     }
 
     public void CSPAlgorithm(City orig, City dest, CSPNode current, int i, MainSolution solution, MainSolution best, CSPHeuristic heuristic) {
-        while (!routes.getConnectionsByOrigin(current.getCity().getName()).isEmpty()) {
+        if (current.getCity().getName().equals(dest.getName())) { // Solution found
+            if (solution.getCost() < best.getCost()) { // check if it's the best solution
+                // Update the best solution
+                best.setPath(new ArrayList<>(solution.getPath()));
+                best.setCost(solution.getCost());
+            } // else we just discard the solution
+        } else {
             ArrayList<Connection> connections = routes.getConnectionsByOrigin(current.getCity().getName());
-            //Connection next = getBestConnection(current, connections);
-            Connection next = connections.get(i);
-            solution.addCityToPath(routes.getCity(next.getTo()), next.getDistance(), next.getDuration());
-            i++;
-            if (current.getCity().getName().equals(dest.getName())) { // Solution found
-                if (solution.getCost() < best.getCost()) { // check if it's the best solution
-                    // Update the best solution
-                    best.setPath(new ArrayList<>(solution.getPath()));
-                    best.setCost(solution.getCost());
-                } // else we just discard the solution
-            } else {
-                // check if it's still factible
-                if (completable(heuristic, solution)) {
-                    CSPNode nextNode = new CSPNode(routes.getCity(next.getTo()), next, next.getDistance());
-                    CSPAlgorithm(orig, dest, nextNode, i, best, solution, heuristic);
+            for (int j = 0; j < connections.size(); j++) {
+                //Connection next = getBestConnection(current, connections);
+                ArrayList<City> path = solution.getPath();
+                Connection next = connections.get(j);
+                // check if it's still feasible
+                if (isFeasible(heuristic, solution, next)) { //
+                    solution.addCityToPath(routes.getCity(next.getTo()), next.getDistance(), next.getDuration());
+                    i++;
+                    CSPNode nextNode = new CSPNode(routes.getCity(next.getTo()), next, next.getDistance(), next.getDuration());
+                    CSPAlgorithm(orig, dest, nextNode, i, solution, best, heuristic);
+                    solution.removeLastCity(next.getDistance(), next.getDistance());
+                    i--;
                 }
 
             }
-            solution.removeLastCity(next.getDistance(), next.getDistance());
-            i--;
         }
     }
 
-    private boolean completable(CSPHeuristic heuristic, MainSolution solution) {
+    private boolean isFeasible(CSPHeuristic heuristic, MainSolution solution, Connection conn) {
+        ArrayList<City> path = solution.getPath();
+        for (City c: path) {
+            // Check if the city has already been visited before
+            if (conn.getTo().equals(c.getName())) {
+                return false;
+            }
+        }
         if (heuristic == CSPHeuristic.DEGREE) {
             // Use the duration as heuristic
+            // if (solution.getDuration() < best.getDuration()) {
+            //     return true;
+            // }
+            return true;
+        } else if (heuristic == CSPHeuristic.LEAST_CONSTRAINING_VALUE) {
+            // Node with the most connections
+            ArrayList<Connection> connections = routes.getConnectionsByOrigin(conn.getTo());
             return true;
         }
         return false;

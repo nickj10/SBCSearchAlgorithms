@@ -7,11 +7,13 @@ public class CSPNode {
     private City city;
     private Connection connection;
     private long distance;
+    private long duration;
 
-    public CSPNode(City city, Connection connection, long distance) {
+    public CSPNode(City city, Connection connection, long distance, long duration) {
         this.city = city;
         this.connection = connection;
         this.distance = distance;
+        this.duration = duration;
     }
 
     public City getCity() {
@@ -36,5 +38,13 @@ public class CSPNode {
 
     public void setDistance(long distance) {
         this.distance = distance;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }

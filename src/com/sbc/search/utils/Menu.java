@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Menu {
     private static final int MAX_MENU_OPTION = 3;
     private static final int MIN_MENU_OPTION = 1;
-    private static final int MAX_SUB_MENU = 'f';
+    private static final int MAX_SUB_MENU = 'c';
     private static final int MIN_SUB_MENU = 'a';
     private String option;
     private String optionB;
@@ -98,6 +98,7 @@ public class Menu {
     public void menuHeuristicas() {
         System.out.println("a) Most-constraining variable");
         System.out.println("b) Least-constraining value");
+        System.out.println("c) Degree");
         System.out.println("Select an option: ");
     }
 
@@ -108,7 +109,7 @@ public class Menu {
             return opt;
         }
         int numeric = optionB.toLowerCase().charAt(0);
-        if (numeric >= 'a' && numeric <= 'f') {
+        if (numeric >= 'a' && numeric <= 'c') {
             opt = numeric;
         }
         return opt;
