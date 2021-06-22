@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class MainSolution {
     private ArrayList<City> path;
     private long cost;
+    private long duration;
 
     public MainSolution(ArrayList<City> path, long cost) {
         this.path = path;
@@ -16,11 +17,19 @@ public class MainSolution {
     public MainSolution() {
         this.path = new ArrayList<City>();
         this.cost = 0;
+        this.duration = 0;
     }
 
-    public void addCityToPath(City city, long cost) {
+    public void addCityToPath(City city, long cost, long duration) {
         this.path.add(city);
         this.cost += cost;
+        this.duration += duration;
+    }
+
+    public void removeLastCity(long cost, long duration) {
+        this.cost -= cost;
+        this.duration -= duration;
+        this.path.remove(this.path.size() - 1);
     }
 
     public void printSolution() {
@@ -45,5 +54,13 @@ public class MainSolution {
 
     public void setCost(long cost) {
         this.cost = cost;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }
