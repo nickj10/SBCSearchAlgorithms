@@ -38,7 +38,7 @@ public class CSP {
                 ArrayList<City> path = solution.getPath();
                 Connection next = connections.get(j);
                 // check if it's still feasible
-                if (isFeasible(heuristic, solution, next)) { //
+                if (isFeasible(heuristic, solution, best, next)) { //
                     solution.addCityToPath(routes.getCity(next.getTo()), next.getDistance(), next.getDuration());
                     i++;
                     CSPNode nextNode = new CSPNode(routes.getCity(next.getTo()), next, next.getDistance(), next.getDuration());
@@ -51,7 +51,7 @@ public class CSP {
         }
     }
 
-    private boolean isFeasible(CSPHeuristic heuristic, MainSolution solution, Connection conn) {
+    private boolean isFeasible(CSPHeuristic heuristic, MainSolution solution, MainSolution best, Connection conn) {
         ArrayList<City> path = solution.getPath();
         for (City c: path) {
             // Check if the city has already been visited before
@@ -61,10 +61,7 @@ public class CSP {
         }
         if (heuristic == CSPHeuristic.DEGREE) {
             // Use the duration as heuristic
-            // if (solution.getDuration() < best.getDuration()) {
-            //     return true;
-            // }
-            return true;
+            return solution.getDuration() < best.getDuration();
         } else if (heuristic == CSPHeuristic.LEAST_CONSTRAINING_VALUE) {
             // Node with the most connections
             ArrayList<Connection> connections = routes.getConnectionsByOrigin(conn.getTo());
